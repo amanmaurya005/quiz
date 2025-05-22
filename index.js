@@ -16,26 +16,31 @@ const data = [
   },
 ];
 
-const questionElem = document.getElementById("question");
-const optionsElems = document.querySelectorAll(".option");
-const answerElem = document.getElementById("answer");
+ let count = 0;
 
-function displayQuestion() {
-  const randomIndex = Math.floor(Math.random() * data.length);
-  const currentQuestion = data[randomIndex];
+    function printQuestion(obj) {
+      const questionPara = document.getElementById("question");
+      const options = document.querySelectorAll(".option");
 
-  questionElem.textContent = currentQuestion.question;
+      questionPara.innerText = obj.question;
+      options.forEach((option, index) => {
+        option.innerText = obj.options[index];
+      });
+    }
 
-  optionsElems.forEach((optionElem, index) => {
-    optionElem.textContent = currentQuestion.options[index];
-  });
+    function showNextQuestion() {
+      if (count >= data.length) {
+        clearInterval(intervalId);
+        
+        return;
+      }
+      printQuestion(data[count]);
+      count++;
+    }
 
-
-  answerElem.textContent = "Answer: " + currentQuestion.answer;
-}
-
-displayQuestion();
-
+    const questionPara = document.getElementById("question");
+    showNextQuestion();
+    const intervalId = setInterval(showNextQuestion, 2000);
 
 
 
